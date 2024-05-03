@@ -10,14 +10,33 @@ include('../../config/database.php');
  echo "Your password: ". $passwd."<br>";
  echo "Your password enc: ".$enc_pass."<br>";*/
 
- $sql = "INSERT INTO users (fullname, email, password ) values ('$fullname' , ' $email', '$enc_pass ')";
+ $squl_validate_email="SELECT * FROM user WHERE email = '$email'";
+ $result = pg_query($conn, $squl_validate_email);
+ $total= pg_num_rows($result);
  
+ 
+
+if($total>0){
+  echo"<script>alert('Email already exist')</script>";
+  header("refresh:0;url= ../signin.html");
+}else{
+  $sql = "
+  INSERT INTO users (fname, email, passwd ) 
+  values ('$fullname' , ' $email', '$enc_pass ')";
+
+
   $ans =pg_query($conn,$sql);
   if ($ans){
-    echo "User has been created successfully";
+    echo"<script>alert('User has been registered')</script>";
+    header("refresh:0;url= ../signin.html");
   }else{
-    echo "ERROR" , pg_last_error();
+  
+    echo "ERROR" . pg_last_error();
   }
+}
+
+
+  
 
   // close conection database
   pg_close($conn)
