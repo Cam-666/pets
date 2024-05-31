@@ -1,3 +1,13 @@
+<?php
+    session_start();
+    if(isset($_SESSION["id_user"])){
+        //header("Location:home.php");
+        header("refresh:0;url=home.php");
+        exit;
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +20,8 @@
     <form action="backend/signin.php" method="post">
         <input type="email" name="email" required placeholder="@">
         <input type="password" name="passwd" required placeholder="*****">
-        <button>login</button>
-        <a href="signup.html">Create an account</a>
+        <button>Login</button>
+        &nbsp;<a href = "signup.html">Create an account</a>
     </form>
 </body>
 </html>
